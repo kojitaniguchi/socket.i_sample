@@ -6,25 +6,12 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-io.emit('some event', { for: 'everyone' });
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-});
-
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    io.emit('message: ' + msg);
+    io.emit('chat message', msg);
   });
-});
-
-io.on('connection', function(socket){
-  socket.broadcast.emit('hi');
 });
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
-});       
+});
